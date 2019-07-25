@@ -363,24 +363,11 @@ Metropolis-Hastings采样法
 可以通过改变模型训练时的目标函数（如代价敏感学习中不同类别有不同的权重）来矫正不平衡性；当样本数目极其不平衡时，也可以将问题转化为单类学习（one-class learning）、异常检测（anomaly detecion）。
 第9章 前向神经网络
 72 写出常用激活函数以及导数
-sigmid
-f(z)=11+exp(−z)
-
-对应的导函数为：
-f′(z)=f(z)(1−f(z))
-tanh
-f(z)=tanh(z)=ez−e−zez+e−z
-
-对应的导函数为：
-f′(z)=1−(f(z))2
-relu
-f(z)=max(0,z)
-
-对应的导函数为：
-f′(z)={1,z>00,z≤0
+sigmid                  f′(z)=f(z)(1−f(z))
+tanh：2*sigmid（2x）-1   f′(z)=1−(f(z))2
+relu                    f′(z)=1,z>0, 0,z≤0
 73 为什么sigmoid和tanh激活函数会导致梯度消失的现象？
-sigmoid激活曲线可以看出：当z很大时，f(z)趋近于1；当z很小时，f(z)趋近于0。其导数在z很大或很小都会趋近于0，造成梯度消失的现象。
-sigmoid激活曲线可以看出：当z很大时，f(z)趋近于1；当z很小时，f(z)趋近于-1。其导数在z很大或很小都会趋近于0，造成梯度消失的现象。实际上，tanh激活函数相当于sigmoid的平移。
+satured
 
 74 Relu系列的激活函数相对于Sigmoid和Tanh激活函数的优点是什么？它们有什么局限性以及如何改进？
 优点：
