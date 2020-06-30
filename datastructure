@@ -1,0 +1,171 @@
+a=[(3,4),(9,5),(6,2)]
+a.sort(key=lambda i:i[0])
+b=sorted(a,key=lambda i:i[0])
+#dfs
+#def dfs(当前状态):
+#    if 当前状态为边界状态: #考虑边界条件
+#    记录或输出   return;
+#    for i in range(x)		#遍历树所有子节点
+#       修改了全局变量
+#       if 子状态满足约束条件:
+#           dfs(子状态)
+#       恢复全局变量//回溯部分
+#bfs
+from collections import deque
+def level_order_tree(root, result):
+    if not root:
+        return
+    queue = deque([root])
+    while queue:
+        node = queue.popleft()
+        # do somethings
+        result.append(node.val)
+        if node.left:
+            queue.append(node.left)
+        if node.right:
+            queue.append(node.right)
+    return result
+#DP题一般都会满足三个条件：子问题重叠、无后效性、最优子结构性质。
+#1.常规来说，先解决初始化的问题，比如在开头都加个“ ”
+#2.dp也要初始化，考虑起头的初始化。
+#3.其实类似递归思想，但注意：正则匹配中，有个小技巧，通配符*匹配成功的前提是前端的尾缀相同，否则用不到通配符，而用不到也是一种用。
+import heapq#两种建堆方法,大堆，小堆
+data=[4,3,5,6,7,8,3,91,9]
+heap = []
+for n in data:
+    heapq.heappush(heap, n)
+heapq.heapify(data)
+heapq._heapify_max(data)
+#删除值，大堆删大值，小堆删小值
+ popmax=heapq.heappop(data)
+print(popmax)
+dic=collections.OrderedDict()
+#深浅拷贝 copy浅拷贝，只拷贝第一层，deepcopy拷贝深层全部。
+import copy
+b=copy.copy(a)
+c=copy.deepcopy(a)
+
+#145迭代处理后序打印问题：
+while root!=None: 
+                result.append(root.val)
+                if root.left!=None:
+                    stack.append(root.left)
+                root=root.right
+            if len(stack)!=0:
+                root=stack.pop()
+return result[::-1]
+#迭代处理中序打印问题：
+    if root!=None:
+        stack.append(root)
+        root=root.left
+    else:
+        root=stack.pop()
+        result.append(root.val)
+        root=root.right
+
+#给定矩阵+字符串，是否存在该字符串的路径
+class Solution:
+    mask = []
+    def hasPath(self, matrix, rows, cols, path):
+        m_s = "".join(matrix)  # 将数组化为字符串，容易查找
+        count = m_s.count(path[0])  # 有几个可能的起点
+        t = 0
+        k = 0
+        if count == 0:
+            return False
+        else:
+            while k < count:
+                # 模板（判断是否重复）
+                mask = [[0] * cols for i in range(rows)]
+                index = m_s.find(path[0], t)
+                i = index / cols
+                j = index % cols
+                t = index + 1  # 控制下一个起点可能的搜索范围
+                k = k + 1
+                if self.define(matrix, rows, cols, i, j, path, mask):
+                    return True
+            return False
+    def define(self, matrix, rows, cols, i, j, path, mask):
+        if len(path) == 0:
+            return True
+        # 连通域判定条件
+        if i >= 0 and i <= rows - 1 and j >= 0 and j <= cols - 1 and matrix[i * cols + j] == path[0] and mask[i][j] != 1:
+            mask[i][j] = 1  # 表示已经过该节点
+            copy = path[1:]  # 将字符串向右移，则下次递归将判断下一个字符
+            # 递归，看下一个位置和下一个字符是否满足条件，只要有一个满足，则返回真
+            return self.define(matrix, rows, cols, i - 1, j, copy, mask) or \
+                   self.define(matrix, rows, cols, i + 1, j, copy, mask) or \
+                   self.define(matrix, rows, cols, i, j - 1, copy, mask) or \
+                   self.define(matrix, rows, cols, i, j + 1, copy, mask)
+        # 不满足连通域条件，返回false
+        return False
+
+#给定二叉树，值，打印从根到节点和为值的路径。    深度优先+栈
+class Solution:
+    def Findpp(self, root, cursum, stack, expect, res):
+        if not root:
+            return []
+        cursum = 0
+        expect = expectNumber
+        res = []
+        stack = []
+        cursum += root.val
+        stack.append(root.val)
+        if(cursum == expect and root.left == None and root.right == None):
+            a = copy.deepcopy(stack)
+            res.append(a)  #或者res.append(stack[:])
+        if root.left:
+            self.Findpp(root.left, cursum, stack, expect, res)
+        if root.right:
+            self.Findpp(root.right, cursum, stack, expect, res)
+        stack.pop()
+#归并算法
+def merge(s1,s2,s):
+    """将两个列表是s1，s2按顺序融合为一个列表s,s为原列表"""
+    # j和i就相当于两个指向的位置，i指s1，j指s2
+    i = j = 0
+    while i+j<len(s):
+        # j==len(s2)时说明s2走完了，或者s1没走完并且s1中该位置是最小的
+        if j==len(s2) or (i<len(s1) and s1[i]<s2[j]):
+            s[i+j] = s1[i]
+            i += 1
+        else:
+            s[i+j] = s2[j]
+            j += 1
+#中序
+if (!root) return;
+if (root->left) inorder(root->left, res);
+res.push_back(root->val);
+if (root->right) inorder(root->right, res);
+
+#判断是否平衡二叉树
+isBalanced(TreeNode * root)
+{return root?abs(depth(root->left)-depth(root->right)) <= 1 & & isBalanced(root->left) & & isBalanced(root->right):1;
+n个骰子，朝上的点数和为s，打印出现和为s的概率
+硬币问题，金额为I，多少种方法 | 最少硬币数
+
+#八皇后问题
+solveNQueens(0, n, new int[n]);
+solveNQueens(int i, int n, int[] positions) {
+    if (i == n) {total++; } else {
+        for (int j = 0; j < n; j++) {positions[i] = j; // row: i, col: j
+            if (validate(i, positions)) {solveNQueens(i + 1, n, positions);
+validate(int maxRow, int[] positions) {
+    for (int i = 0; i < maxRow; i++) {
+        if (positions[i] == positions[maxRow] // same column || Math.abs(positions[i] - positions[maxRow]) == maxRow - i) // catercorner line
+            return false;} return true;
+#正则表达式
+while (s < str.length()){
+    if (p < pattern.length()  && (pattern.charAt(p) == '?' || str.charAt(s) == pattern.charAt(p))){s++; p++;}
+    else if (p < pattern.length() && pattern.charAt(p) == '*'){
+            starIdx = p;match = s; p++;}
+   else if (starIdx != -1){
+            p = starIdx + 1; match++; s = match; } else return false}
+while (p < pattern.length() && pattern.charAt(p) == '*') p++;
+        return p == pattern.length();
+#编辑距离
+for (int i = 0; i <= m; ++i) dp[i][0] = i; for (int i = 0; i <= n; ++i) dp[0][i] = i;
+    for (int i = 1; i <= m; ++i) {for (int j = 1; j <= n; ++j) {
+        if (word1[i - 1] == word2[j - 1]) {
+            dp[i][j] = dp[i - 1][j - 1];} else {
+            dp[i][j] = min(dp[i - 1][j - 1], min(dp[i - 1][j], dp[i][j - 1])) + 1;
